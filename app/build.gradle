@@ -16,6 +16,16 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+//        opencvsdk=<E:\CODE3\ChromaCapture\opencv>
+//        def opencvsdk='E:\\CODE3\\ChromaCapture\\opencv'
+        def opencvsdk='opencv'
+        externalNativeBuild {
+            cmake {
+                cppFlags "-std=c++11 -frtti -fexceptions"
+                arguments "-DOpenCV_DIR=" + opencvsdk + "/sdk/native/jni" // , "-DANDROID_ARM_NEON=TRUE"
+            }
+        }
     }
 
     buildTypes {
@@ -30,6 +40,8 @@ android {
     }
     buildFeatures {
         viewBinding true
+        buildConfig = true
+
     }
 
 }
@@ -42,6 +54,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    implementation project(path: ':opencv')
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
 
     // CameraX
     def camerax_version = "1.2.1"
@@ -58,7 +74,7 @@ dependencies {
 //    implementation 'androidx.core:core-ktx:1.9.0'
 //    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.10"
 
-    implementation project(':openCVLibrary')
+//    implementation project(':openCVLibrary')
 
 
     // Testing

@@ -14,3 +14,5 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Chroma Capture"
 include ':app'
+include ':opencv'
+
