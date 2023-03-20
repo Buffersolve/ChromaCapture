@@ -145,7 +145,7 @@ public class ChromaCaptureActivity extends AppCompatActivity {
             // Unlock the Canvas and Surface
             surface.unlockCanvasAndPost(canvas);
         } catch (Exception e) {
-            Log.d("EXEPTION", "SMTH WENT WRONG");
+            Log.d("EXCEPTION", "SMTH WENT WRONG");
         } finally {
             surface.release();
         }

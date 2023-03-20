@@ -19,7 +19,6 @@ public class ChromaCaptureApplication extends Application {
                 Log.d("OpenCVLOAD", "OpenCV initialization failed");
             } else {
                 Log.d("OpenCVLOAD", "OpenCV initialization succeeded");
-
             }
 
         }
