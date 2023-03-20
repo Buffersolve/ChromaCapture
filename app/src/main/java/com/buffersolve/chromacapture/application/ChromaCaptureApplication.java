@@ -1,8 +1,11 @@
 package com.buffersolve.chromacapture.application;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.google.android.material.color.DynamicColors;
+
+import org.opencv.android.OpenCVLoader;
 
 public class ChromaCaptureApplication extends Application {
 
@@ -11,9 +14,12 @@ public class ChromaCaptureApplication extends Application {
             DynamicColors.applyToActivitiesIfAvailable(this);
             super.onCreate();
 
+            if (!OpenCVLoader.initDebug()) {
+                Log.d("OpenCVLOAD", "OpenCV initialization failed");
+            } else {
+                Log.d("OpenCVLOAD", "OpenCV initialization succeeded");
 
+            }
 
         }
-
-
 }

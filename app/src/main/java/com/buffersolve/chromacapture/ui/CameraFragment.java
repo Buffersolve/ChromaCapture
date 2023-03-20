@@ -1,7 +1,11 @@
 package com.buffersolve.chromacapture.ui;
 
+
 import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +13,9 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.camera.core.CameraSelector;
+import androidx.camera.core.ImageCapture;
+import androidx.camera.core.ImageCaptureException;
+import androidx.camera.core.ImageProxy;
 import androidx.camera.core.Preview;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
@@ -20,6 +27,7 @@ import com.buffersolve.chromacapture.R;
 import com.buffersolve.chromacapture.databinding.CameraFragmentBinding;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.File;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -63,13 +71,35 @@ public class CameraFragment extends Fragment {
             try {
                 // Provider
                 ProcessCameraProvider processCameraProvider = ProcessCameraProvider.getInstance(requireContext()).get();
-                // Use Case
-                Preview preview = new Preview.Builder().build();
 
+                // Use Cases
+                Preview preview = new Preview.Builder().build();
                 preview.setSurfaceProvider(binding.cameraPreview.getSurfaceProvider());
+                ImageCapture imageCapture = new ImageCapture.Builder().build();
+
                 // Provide
                 processCameraProvider.unbindAll();
-                processCameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview);
+                processCameraProvider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, preview, imageCapture);
+
+
+                // Take a picture
+                File photoFile = new File(Environment.getExternalStorageDirectory(), "photo.jpg");
+
+                ImageCapture.OutputFileOptions outputFileOptions = new ImageCapture.OutputFileOptions.Builder(photoFile).build();
+                imageCapture.takePicture(outputFileOptions, Executors.newSingleThreadExecutor(), new ImageCapture.OnImageSavedCallback() {
+                    @Override
+                    public void onImageSaved(@NonNull ImageCapture.OutputFileResults outputFileResults) {
+                        // Image saved successfully
+                        Log.d("TAKEPIC", "Photo saved to: " + photoFile.getAbsolutePath());
+                    }
+
+                    @Override
+                    public void onError(@NonNull ImageCaptureException exception) {
+                        // Error occurred while saving image
+                        Log.e("TAKEPIC", "Error saving photo: " + exception.getMessage(), exception);
+                    }
+                });
+
             } catch (ExecutionException | InterruptedException e) {
                 e.printStackTrace();
             }
