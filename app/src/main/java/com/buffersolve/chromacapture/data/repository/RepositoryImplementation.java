@@ -7,8 +7,8 @@ import com.buffersolve.chromacapture.domain.repository.Repository;
 public class RepositoryImplementation implements Repository {
 
     public ColorModel analyze(byte[] imageData) {
-        PictureAnalyze pictureAnalyze = new PictureAnalyze(imageData);
-        return pictureAnalyze.analyze();
+        PictureAnalyze pictureAnalyze = new PictureAnalyze();
+        return pictureAnalyze.analyze(imageData);
     }
 
 

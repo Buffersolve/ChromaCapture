@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.android.material.color.DynamicColors;
 
 import org.opencv.android.OpenCVLoader;
+import org.opencv.core.Core;
 
 public class ChromaCaptureApplication extends Application {
 

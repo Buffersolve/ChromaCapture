@@ -84,7 +84,7 @@ public class ChromaCaptureActivity extends AppCompatActivity {
 
                     // Execute
                     viewModel.analyze(imageData);
-                    viewModel.getAnalyzeData().observe(this, new Observer<>() {
+                    viewModel.analyzeData.observe(this, new Observer<>() {
                         @Override
                         public void onChanged(ColorModel colorModel) {
                             if (colorModel.getError() == null) {
@@ -97,27 +97,9 @@ public class ChromaCaptureActivity extends AppCompatActivity {
                                 System.out.println("Hex Color: " + colorModel.getHex());
                                 binding.tvHEX.setText(colorModel.getHex());
 
-                                // Get the Surface from the TextureView
-                                Surface surface = new Surface(binding.textureView.getSurfaceTexture());
+                                // Show Color
+                                showColorOnTexture(colorModel);
 
-                                try {
-                                    // Lock the Surface for editing
-                                    Canvas canvas = surface.lockCanvas(null);
-
-                                    // Create a Paint object with the desired color
-                                    Paint paint = new Paint();
-                                    paint.setColor(Color.parseColor(colorModel.getHex())); // Replace with desired color
-
-                                    // Draw a rectangle with the desired color onto the Canvas
-                                    canvas.drawRect(0, 0, binding.textureView.getWidth(), binding.textureView.getHeight(), paint);
-
-                                    // Unlock the Canvas and Surface
-                                    surface.unlockCanvasAndPost(canvas);
-                                } catch (Exception e) {
-                                    Log.d("EXEPTION", "SMTH WENT WRONG");
-                                } finally {
-                                    surface.release();
-                                }
                             }
                         }
                     });
@@ -143,6 +125,30 @@ public class ChromaCaptureActivity extends AppCompatActivity {
         canvasForRound.drawBitmap(photo, rect, rect, paintForRound);
 
         return roundedBitmap;
+    }
+
+    private void showColorOnTexture(ColorModel colorModel) {
+        // Get the Surface from the TextureView
+        Surface surface = new Surface(binding.textureView.getSurfaceTexture());
+
+        try {
+            // Lock the Surface for editing
+            Canvas canvas = surface.lockCanvas(null);
+
+            // Create a Paint object with the desired color
+            Paint paint = new Paint();
+            paint.setColor(Color.parseColor(colorModel.getHex())); // Replace with desired color
+
+            // Draw a rectangle with the desired color onto the Canvas
+            canvas.drawRect(0, 0, binding.textureView.getWidth(), binding.textureView.getHeight(), paint);
+
+            // Unlock the Canvas and Surface
+            surface.unlockCanvasAndPost(canvas);
+        } catch (Exception e) {
+            Log.d("EXEPTION", "SMTH WENT WRONG");
+        } finally {
+            surface.release();
+        }
     }
 
 }

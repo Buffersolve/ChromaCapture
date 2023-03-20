@@ -14,25 +14,16 @@ import java.util.List;
 import java.util.Map;
 
 public class PictureAnalyze {
-    byte[] imageData;
-//    ColorModel colorResult;
 
-    public PictureAnalyze(byte[] imageData) {
-        this.imageData = imageData;
-    }
-    //OpenCV
-    // Decode the byte array as a Mat object
+    public ColorModel analyze(byte[] imageData) {
 
-    public ColorModel analyze() {
+        //OpenCV
         Mat img = Imgcodecs.imdecode(new MatOfByte(imageData), Imgcodecs.IMREAD_UNCHANGED);
-
-        // Load the image:
-        // Mat img = Imgcodecs.imread(imagePath);
 
         if (img.empty()) {
             // Failed to load image
             Log.d("OpenCVLOAD", "Failed to load image");
-            return new ColorModel(null, null, new Error());
+            return new ColorModel(null, null, new Error("Failed to load image"));
         } else {
             Log.d("OpenCVLOAD", "Success to load image");
 
@@ -80,8 +71,6 @@ public class PictureAnalyze {
             String rgb = "R=" + red + ", G=" + green + ", B=" + blue;
             String hex = String.format("#%02x%02x%02x", red, green, blue);
 
-//            colorResult.setRgb(rgb);
-//            colorResult.setHex(hex);
             return new ColorModel(rgb, hex, null);
 
         }

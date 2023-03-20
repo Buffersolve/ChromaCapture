@@ -14,17 +14,19 @@ public class ChromaCaptureViewModel extends ViewModel {
         this.analyzeUseCase = analyzeUseCase;
     }
 
-    private MutableLiveData<ColorModel> analyzeData = new MutableLiveData<>();
+    private final MutableLiveData<ColorModel> _analyzeData = new MutableLiveData<>();
+    public final LiveData<ColorModel> analyzeData
+            = _analyzeData;
 
-    public LiveData<ColorModel> getAnalyzeData() {
-        return analyzeData;
-    }
+//    public LiveData<ColorModel> analyzeData() {
+//        return _analyzeData;
+//    }
 
 
     // Analyze Pic
     public void analyze(byte[] imageData) {
         ColorModel data = analyzeUseCase.execute(imageData);
-        analyzeData.setValue(data);
+        _analyzeData.setValue(data);
     }
 
 
