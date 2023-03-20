@@ -6,6 +6,9 @@ import java.util.List;
 //import org.opencv.R;
 import com.buffersolve.chromacapture.BuildConfig;
 import com.buffersolve.chromacapture.R;
+//import com.buffersolve.chromacapture.opencv.BuildConfig;
+//import com.buffersolve.chromacapture.opencv.R;
+
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
