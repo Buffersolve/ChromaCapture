@@ -22,7 +22,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Surface;
 import android.widget.Toast;
-import com.buffersolve.chromacapture.databinding.ActivityMainBinding;
+import com.buffersolve.chromacapture.databinding.ActivityChromacaptureBinding;
 import com.buffersolve.chromacapture.domain.model.ColorModel;
 import com.buffersolve.chromacapture.presentation.viewmodel.ChromaCaptureViewModel;
 import com.buffersolve.chromacapture.presentation.viewmodel.ChromaCaptureViewModelFactory;
@@ -31,25 +31,26 @@ import java.io.ByteArrayOutputStream;
 
 public class ChromaCaptureActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
+    private ActivityChromacaptureBinding binding;
     private ChromaCaptureViewModel viewModel;
     private static final Integer PERM_REQUEST_CODE = 11;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        binding = ActivityChromacaptureBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
-        // Camera permission request
-        if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA}, PERM_REQUEST_CODE);
-        }
 
         // Camera Btn click
         binding.cameraBtn.setOnClickListener(v -> {
-            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            cameraActivityResultLauncher.launch(cameraIntent);
+            // Camera permission request
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA}, PERM_REQUEST_CODE);
+            } else {
+                // Permission granted
+                Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                cameraActivityResultLauncher.launch(cameraIntent);
+            }
         });
 
         // ViewModel Factory

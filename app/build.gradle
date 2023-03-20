@@ -8,6 +8,7 @@ android {
     namespace 'com.buffersolve.chromacapture'
     compileSdk 33
 
+
     defaultConfig {
         applicationId "com.buffersolve.chromacapture"
         minSdk 24
@@ -17,12 +18,20 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        multiDexEnabled true
+        externalNativeBuild {
+            cmake {
+                arguments "-DANDROID_STL=c++_shared"
+                targets "opencv_jni_shared"
+            }
+        }
 
     }
 
     buildTypes {
         release {
             minifyEnabled false
+//            enableR8=false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -32,9 +41,13 @@ android {
     }
     buildFeatures {
         viewBinding true
-        buildConfig = true
+//        buildConfig = true
 
     }
+//    dependencies {
+//        classpath 'com.android.tools.build:gradle:7.4.2'
+//
+//    }
 
 }
 
@@ -47,12 +60,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.8.0'
 
     // CameraX
-    def camerax_version = "1.2.1"
-    implementation "androidx.camera:camera-core:${camerax_version}"
-    implementation "androidx.camera:camera-camera2:${camerax_version}"
-    implementation "androidx.camera:camera-lifecycle:${camerax_version}"
-    implementation "androidx.camera:camera-view:${camerax_version}"
-
+    implementation "androidx.camera:camera-camera2:1.2.1"
     implementation project(path: ':opencv')
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
