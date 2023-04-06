@@ -4,7 +4,7 @@ Test Task for Clear Solutions
 ```
 <div align="center">
 
-[![Logo](https://raw.githubusercontent.com/Buffersolve/ChromaCapture/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://github.com/Buffersolve/JutLoader) 
+[![Logo](https://raw.githubusercontent.com/Buffersolve/ChromaCapture/main/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)](https://github.com/Buffersolve/ChromaCapture) 
 
 [![Love](https://img.shields.io/badge/Made-With%20LOVE-red?style=flat-square)](https://github.com/Buffersolve)
 
